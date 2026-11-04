@@ -6,11 +6,11 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ---- Stage 2: Run the JAR ----
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
 # 1. Install timezone data and set timezone to Lagos
-RUN apk add --no-cache tzdata
+RUN apt-get update && apt-get install -y tzdata && rm -rf /var/lib/apt/lists/*
 ENV TZ=Africa/Lagos
 
 # 2. Create a config directory
