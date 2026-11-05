@@ -1,0 +1,24 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ] # Only run when code is pushed to main
+  pull_request:
+    branches: [ "main" ] # Also run when a PR is opened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # GitHub provides a free Ubuntu server for this job
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: ./mvnw clean package -DskipTests # We skip tests here to save time (in real life, don't skip them!)
