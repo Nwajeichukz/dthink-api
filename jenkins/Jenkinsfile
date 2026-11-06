@@ -29,8 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying via Docker Compose...'
-                // 3. Use sudo so Jenkins has Docker permissions
-                sh 'sudo docker compose up -d --build'
+                sh 'docker compose up -d --build'
             }
         }
     }
