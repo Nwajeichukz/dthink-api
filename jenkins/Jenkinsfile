@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Pulling code from GitHub...'
+                // 1. ACTUALLY DOWNLOAD THE CODE
+                git branch: 'main', url: 'https://github.com/Nwajeichukz/dthink-api.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building the Spring Boot app...'
+                // 2. Make sure the wrapper is executable before running it
+                sh 'chmod +x ./mvnw'
+                sh './mvnw clean package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh './mvnw test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying via Docker Compose...'
+                // 3. Use sudo so Jenkins has Docker permissions
+                sh 'sudo docker compose up -d --build'
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs() // Cleans up the workspace so the next build starts fresh
+        }
+        success {
+            echo 'Pipeline succeeded! 🎉 Deployed to production.'
+        }
+        failure {
+            echo 'Pipeline failed! ❌'
+        }
+    }
+}
