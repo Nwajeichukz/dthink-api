@@ -61,7 +61,7 @@ public class AppController {
         itemDto.setName("Welcome");
         itemDto.setDescription("Your deployment was successful!");
 
-        ItemDto itemDto1 = new ItemDto("chuks", "sammy is a boy");
+        ItemDto itemDto1 = new ItemDto("zack", "zack is a boy");
         ItemDto itemDto2 = new ItemDto("zain", "zain is a boy");
         ItemDto itemDto3 = new ItemDto("tommy", "tommy is a boy");
         ItemDto itemDto4 = new ItemDto("alice", "alice is a girl");
